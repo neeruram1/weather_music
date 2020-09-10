@@ -6,3 +6,7 @@ gem 'sinatra'
 gem 'faraday'
 gem 'json'
 gem 'figaro'
+
+group :test do
+  gem 'rspec'
+end

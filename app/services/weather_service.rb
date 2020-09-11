@@ -3,8 +3,9 @@ require 'dotenv'
 Dotenv.load
 
 class WeatherService
-  def forecast
-    to_json("/data/2.5/weather?units=imperial&zip=80003")
+  def forecast(location)
+    params = {units: 'imperial', q: "#{location}" }
+    to_json("/data/2.5/weather", params)
   end
 
   private

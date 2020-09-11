@@ -1,5 +1,13 @@
-require 'fast_jsonapi'
 class ForecastSerializer
-  include FastJsonapi::ObjectSerializer
-  attributes :temp
+
+  def initialize(forecast)
+    @forecast = forecast
+  end
+
+  def data_hash
+   data = {
+     description: @forecast.description
+   }
+   data
+ end
 end

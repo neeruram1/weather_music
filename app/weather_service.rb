@@ -1,7 +1,22 @@
+require 'faraday'
+require 'dotenv'
+Dotenv.load
+
 class WeatherService
-  def self.api_response
-    uri = URI.parse(URI.encode("https://api.openweathermap.org/data/2.5/weather?appid=529aaf42260736dead3fc38c62695879&units=imperial&zip=80003"))
-    api_response = Net::HTTP.get(uri)
-    JSON.parse(api_response)
+  def forecast
+    to_json("/data/2.5/weather?units=imperial&zip=80003")
+  end
+
+  private
+
+  def conn
+    Faraday.new('https://api.openweathermap.org') do |f|
+      f.params[:appid] = "#{ENV['WEATHER_API']}"
+    end
+  end
+
+  def to_json(url)
+    response = conn.get(url)
+    JSON.parse(response.body, symbolize_names: true)
   end
 end
